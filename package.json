@@ -1,0 +1,50 @@
+{
+  "name": "@matths/fastify-svelte-view",
+  "version": "1.0.0",
+  "description": "A Fastify plugin for svelte views using CSR/SSR with or without hydration.",
+  "homepage": "https://github.com/matths/fastify-svelte-view",
+  "author": {
+    "name": "Matthias Dittgen",
+    "url": "https://github.com/matths"
+  },
+  "type": "module",
+  "main": "build/index.js",
+  "types": "build/index.d.ts",
+  "files": [
+    "build",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "fastify",
+    "plugin",
+    "svelte",
+    "view",
+    "render",
+    "template",
+    "ssr",
+    "csr",
+    "server",
+    "client",
+    "hydration"
+  ],
+  "scripts": {
+    "build": "tsc",
+     "dev": "tsc --watch",
+     "publish": "npm publish --access public"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^25.0.9",
+    "fastify-plugin": "^5.1.0",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@piscina/fastify": "^6.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.3",
+    "fastify": "^5.7.1",
+    "rollup": "^4.55.1",
+    "rollup-plugin-svelte": "^7.2.3",
+    "svelte": "^5.46.3"
+  }
+}
