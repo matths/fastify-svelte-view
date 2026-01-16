@@ -8,7 +8,7 @@ This is a quite new open-source project and still a work in progress. Ideas, fee
 ## Installation
 
 ```bash
-npm install fastify-svelte-view
+npm install @matths/fastify-svelte-view
 ```
 
 ## Registering the Plugin
@@ -133,6 +133,17 @@ Here's an overview of the architectural differences between the modes to sharpen
 - **SSG (Server-Side Generation):** - not included
   - SSG would happen at _**build time**_ (when the fastify server is started). Feel free to share your ideas about stuff like this with us.
   - **fastify-svelte-view** currently does not provide any caching. We might add this later on. There are ideas for caching, cache-warmup and cache invalidation, but no implementation, yet.
+
+## Acknowledgements & Dependencies
+
+This project is built on top of several important open-source packages, e.g.:
+
+- **fastify**: The core web framework providing the server and routing foundation.
+- **svelte**: The modern UI framework enabling both SSR and CSR rendering of components.
+- **rollup**: The module bundler used for compiling and bundling Svelte components and assets.
+- **@piscina/fastify**: For efficient worker thread management and performance.
+
+Thanks to the great open source maintainers and communities, for their contributions and inspiration that make projects like this possible.
 
 ## License
 MIT

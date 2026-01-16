@@ -1,6 +1,6 @@
 {
   "name": "@matths/fastify-svelte-view",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "A Fastify plugin for svelte views using CSR/SSR with or without hydration.",
   "homepage": "https://github.com/matths/fastify-svelte-view",
   "author": {
