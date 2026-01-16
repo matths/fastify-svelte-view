@@ -1,6 +1,6 @@
 import fp from 'fastify-plugin';
 import fastifyPiscina from '@piscina/fastify';
-import { FastifyInstance } from 'fastify';
+import type { FastifyInstance } from 'fastify';
 
 export const fastifySvelteView = async (fastify: FastifyInstance, options: any) => {
   const {templateDir, layoutTemplate} = options;

@@ -2,6 +2,7 @@
 import { rollup } from 'rollup';
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
+import { sveltePreprocess } from 'svelte-preprocess';
 
 const suppressSvelteCircularDependencyWarnings = (warning: any, warn: (warning: any) => void) => {
   if (
@@ -31,6 +32,12 @@ export const rollupBundle = async (target: 'server' | 'client', {source = '', fi
       },
       svelte({
         emitCss: false,
+        preprocess: sveltePreprocess({
+          typescript: true,
+          scss: {
+            includePaths: ['src', 'node_modules']
+          },
+        }),
         compilerOptions: {
           generate: target,
           runes: true,

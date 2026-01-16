@@ -10,6 +10,7 @@
     "declaration": true,
     "declarationMap": true,
     "moduleResolution": "Node",
+    "verbatimModuleSyntax": true
   },
   "include": ["src/**/*.ts"]
 }
