@@ -1,26 +1,24 @@
 import fp from 'fastify-plugin';
 import fastifyPiscina from '@piscina/fastify';
 import type { FastifyInstance } from 'fastify';
+import type { RegisterOptions } from './types/register-options.type';
+import type { RenderOptions } from './types/render-options.type';
 
-export const fastifySvelteView = async (fastify: FastifyInstance, options: any) => {
-  const {templateDir, layoutTemplate} = options;
-
+export const fastifySvelteView = async (
+  fastify: FastifyInstance,
+  {templateDir, layoutTemplate, generate}: RegisterOptions
+) => {
   fastify.register(fastifyPiscina, {
     filename: new URL('./lib/svelte-bundler.js', import.meta.url).pathname
   });
 
-  fastify.decorate('renderSvelte', async ({props, title, file, source, mode = 'SSR', hydrate = true}: {props: any, title: string, file?: string, source?: string, mode?: 'SSR' | 'CSR', hydrate?: boolean}) => {
-    return await fastify.runTask({
+  fastify.decorate('renderSvelte',
+    (renderOptions: RenderOptions): Promise<string> => fastify.runTask({
       templateDir,
       layoutTemplate,
-      title,
-      props,
-      file,
-      source,
-      mode,
-      hydrate
-    });
-  });
+      ...renderOptions,
+    })
+  );
 };
 
 export default fp(fastifySvelteView, {
