@@ -14,22 +14,23 @@ const suppressSvelteCircularDependencyWarnings = (warning: any, warn: (warning: 
   warn(warning);
 };
 
+const resolveFileWithString = (name: string, source: string) => ({
+  name: `resolve-file-with-string-${name}`,
+  resolveId(id: string) {
+    if (id === name) return id;
+  },
+  load(id: string) {
+    if (id === name) return source;
+  }
+})
+
 export const rollupBundle = async (target: 'server' | 'client', {source = '', file = '', clientEntry}: {source?: string, file?: string, clientEntry?: string}) => {
   const bundle = await rollup({
     input: clientEntry ? '_client-entry.js' : (file ?? '_app.svelte'),
     onwarn: suppressSvelteCircularDependencyWarnings,
     plugins: [
-      {
-        name: 'resolve-files',
-        resolveId(id) {
-          if (id === '_client-entry.js') return id;
-          if (id === '_app.svelte') return id;
-        },
-        load(id) {
-          if (id === '_client-entry.js' && clientEntry) return clientEntry;
-          if (id === '_app.svelte' && source) return source;
-        }
-      },
+      resolveFileWithString('_app.svelte', source),
+      resolveFileWithString('_client-entry.js', clientEntry ?? ''),
       svelte({
         emitCss: false,
         preprocess: sveltePreprocess({
