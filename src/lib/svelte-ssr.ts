@@ -1,4 +1,4 @@
-import { dynamicImport } from './dynamic-import';
+import { dynamicImport } from './dynamic-import.js';
 import { render } from 'svelte/server';
 import fs from 'fs/promises';
 import path from 'path';
