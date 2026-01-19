@@ -2,10 +2,12 @@ import path from 'path';
 import { renderLayout } from './render-layout.js';
 import { rollupBundle } from './rollup-bundle.js';
 import { svelteSSR } from './svelte-ssr.js';
+import type { RenderOptions } from '../types/render-options.type.js';
+import type { TemplateOptions } from '../types/template-options.type.js';
 
-const encode = (str: string) => encodeURIComponent(str).replace(/'/g, "\\'");
+export const encode = (str: string) => encodeURIComponent(str).replace(/'/g, "\\'");
 
-const getClientEntry = (mode?: 'SSR' | 'CSR', file?: string) => {
+export const getClientEntry = (mode?: 'SSR' | 'CSR', file?: string) => {
   const lifecycleMethod = mode === 'SSR' ? 'hydrate' : 'mount';
   const appFile = file ? file : '_app.svelte';
   return `import { ${lifecycleMethod} } from 'svelte';
@@ -14,7 +16,7 @@ import App from '${appFile}';
 export { ${lifecycleMethod}, App };
 `};
 
-const getScript = (mode: 'SSR' | 'CSR', clientCode: string, props: any) => {
+export const getScript = (mode: 'SSR' | 'CSR', clientCode: string, props: any) => {
   const lifecycleMethod = mode === 'SSR' ? 'hydrate' : 'mount';
   return `<script type="module">
 import { App, ${lifecycleMethod} } from 'data:text/javascript;charset=utf-8,${encode(clientCode)}';
@@ -26,10 +28,19 @@ const app = ${lifecycleMethod}(App, {
 </script>`;
 };
 
-const build =  async (
-  {templateDir, layoutTemplate, props, title, file, source, mode = 'SSR', hydrate = true}: {templateDir: string, layoutTemplate: string, props: any, title: string, file?: string, source?: string, mode?: 'SSR' | 'CSR', hydrate?: boolean}
+export const build =  async (
+  {
+    templateDir = '',
+    layoutTemplate,
+    title,
+    file = '',
+    source,
+    props,
+    mode = 'SSR',
+    hydrate = true
+  }: RenderOptions & TemplateOptions
 ): Promise<string> => {
-  const appFile = file ? path.join(templateDir ?? '', file ?? '') : '_app.svelte';
+  const appFile = file ? path.join(templateDir, file) : '_app.svelte';
   
   let head = '';
   let body = '';

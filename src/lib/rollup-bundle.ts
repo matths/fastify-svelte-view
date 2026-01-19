@@ -14,7 +14,7 @@ const suppressSvelteCircularDependencyWarnings = (warning: any, warn: (warning: 
   warn(warning);
 };
 
-const resolveFileWithString = (name: string, source: string) => ({
+export const resolveFileWithString = (name: string, source: string) => ({
   name: `resolve-file-with-string-${name}`,
   resolveId(id: string) {
     if (id === name) return id;
@@ -26,7 +26,7 @@ const resolveFileWithString = (name: string, source: string) => ({
 
 export const rollupBundle = async (target: 'server' | 'client', {source = '', file = '', clientEntry}: {source?: string, file?: string, clientEntry?: string}) => {
   const bundle = await rollup({
-    input: clientEntry ? '_client-entry.js' : (file ?? '_app.svelte'),
+    input: clientEntry ? '_client-entry.js' : (file ? file : '_app.svelte'),
     onwarn: suppressSvelteCircularDependencyWarnings,
     plugins: [
       resolveFileWithString('_app.svelte', source),
