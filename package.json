@@ -31,9 +31,10 @@
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
+    "clean": "rm -rf build",
     "prepare": "npm run build",
     "publish": "npm publish --access public",
-    "test": "vitest run --coverage"
+    "test": "npm run build && vitest run --coverage"
   },
   "license": "MIT",
   "devDependencies": {
