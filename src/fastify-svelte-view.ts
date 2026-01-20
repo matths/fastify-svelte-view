@@ -8,9 +8,15 @@ export const fastifySvelteView = async (
   fastify: FastifyInstance,
   {templateDir, layoutTemplate, generate}: RegisterOptions
 ) => {
-  fastify.register(fastifyPiscina, {
-    filename: new URL('./lib/svelte-bundler.js', import.meta.url).pathname
-  });
+  let filename = new URL('./lib/svelte-bundler.js', import.meta.url).pathname;
+
+  /* v8 ignore start */
+  if (process.env.VITEST) {
+      filename = new URL('./../build/lib/svelte-bundler.js', import.meta.url).pathname;
+  }
+  /* v8 ignore stop */
+
+  fastify.register(fastifyPiscina, { filename });
 
   fastify.decorate('renderSvelte',
     (renderOptions: RenderOptions): Promise<string> => fastify.runTask({

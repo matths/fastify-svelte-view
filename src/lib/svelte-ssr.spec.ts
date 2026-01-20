@@ -9,6 +9,7 @@ vi.mock('fs/promises', () => ({
   default: {
     writeFile: vi.fn(),
     unlink: vi.fn(),
+    mkdir: vi.fn(),
   },
 }));
 
