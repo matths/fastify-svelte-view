@@ -61,7 +61,7 @@ describe('rollupBundle', () => {
     const rollupArgs = rollupMock.mock.calls[0][0];
     expect(rollupArgs.input).toBe('_app.svelte');
     expect(typeof rollupArgs.onwarn).toBe('function');
-    expect(rollupArgs.plugins).toHaveLength(4);
+    expect(rollupArgs.plugins).toHaveLength(5);
 
     expect(generateMock).toHaveBeenCalledWith({ format: 'esm' });
     expect(result).toBe('/* bundled code */');

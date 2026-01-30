@@ -3,6 +3,7 @@ import { rollup } from 'rollup';
 import svelte from 'rollup-plugin-svelte';
 import resolve from '@rollup/plugin-node-resolve';
 import { sveltePreprocess } from 'svelte-preprocess';
+import typescript from '@rollup/plugin-typescript';
 
 const suppressSvelteCircularDependencyWarnings = (warning: any, warn: (warning: any) => void) => {
   if (
@@ -43,6 +44,19 @@ export const rollupBundle = async (target: 'server' | 'client', {source = '', fi
           generate: target,
           runes: true,
         }
+      }),
+      typescript({
+        tsconfig: false,
+        compilerOptions: {
+          target: "ES2020",
+          module: "ESNext",
+          strict: true,
+          esModuleInterop: true,
+          skipLibCheck: true,
+          forceConsistentCasingInFileNames: true,
+          moduleResolution: "Node",
+        },
+        include: ["**/*.ts"]
       }),
       resolve({
         browser: target === 'client',
