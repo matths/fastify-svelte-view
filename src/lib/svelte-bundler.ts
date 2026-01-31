@@ -7,6 +7,8 @@ import type { TemplateOptions } from '../types/template-options.type.js';
 
 export const encode = (str: string) => encodeURIComponent(str).replace(/'/g, "\\'");
 
+export const encodeBase64 = (str: string) => Buffer.from(str, 'utf-8').toString('base64');
+
 export const getClientEntry = (mode?: 'SSR' | 'CSR', file?: string) => {
   const lifecycleMethod = mode === 'SSR' ? 'hydrate' : 'mount';
   const appFile = file ? file : '_app.svelte';
@@ -19,7 +21,7 @@ export { ${lifecycleMethod}, App };
 export const getScript = (mode: 'SSR' | 'CSR', clientCode: string, props: any) => {
   const lifecycleMethod = mode === 'SSR' ? 'hydrate' : 'mount';
   return `<script type="module">
-import { App, ${lifecycleMethod} } from 'data:text/javascript;charset=utf-8,${encode(clientCode)}';
+import { App, ${lifecycleMethod} } from 'data:text/javascript;base64,${encodeBase64(clientCode)}';
 
 const app = ${lifecycleMethod}(App, {
   target: document.getElementById('app'),
