@@ -1,8 +1,9 @@
 
 import { rollup } from 'rollup';
 import svelte from 'rollup-plugin-svelte';
-import resolve from '@rollup/plugin-node-resolve';
 import { sveltePreprocess } from 'svelte-preprocess';
+import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
 import typescript from '@rollup/plugin-typescript';
 
 const suppressSvelteCircularDependencyWarnings = (warning: any, warn: (warning: any) => void) => {
@@ -62,7 +63,8 @@ export const rollupBundle = async (target: 'server' | 'client', {source = '', fi
         browser: target === 'client',
         exportConditions: ["svelte"],
         extensions: ['.svelte']
-      })
+      }),
+      terser()
     ]
   });
   const { output } = await bundle.generate({ format: 'esm' });
