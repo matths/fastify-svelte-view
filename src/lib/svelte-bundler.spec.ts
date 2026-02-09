@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { encode, getClientEntry, getScript, build } from './svelte-bundler';
+import { encode, getClientEntry, getScript, build, encodeBase64 } from './svelte-bundler';
 import { renderLayout } from './render-layout.js';
 import { rollupBundle } from './rollup-bundle.js';
 import { svelteSSR } from './svelte-ssr.js';
@@ -37,7 +37,7 @@ describe('svelte-bundler helpers', () => {
     const script = getScript('SSR', code, props);
     expect(script).toContain('hydrate');
     expect(script).toContain('foo');
-    expect(script).toContain(encode(code));
+    expect(script).toContain(encodeBase64(code));
   });
 
   it('generates correct script tag for CSR', () => {
@@ -46,7 +46,7 @@ describe('svelte-bundler helpers', () => {
     const script = getScript('CSR', code, props);
     expect(script).toContain('mount');
     expect(script).toContain('bar');
-    expect(script).toContain(encode(code));
+    expect(script).toContain(encodeBase64(code));
   });
 });
 
